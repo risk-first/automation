@@ -1,5 +1,7 @@
 package org.riskfirst.automation;
 
+import java.util.Map;
+
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -19,7 +21,7 @@ public class GithubAPI {
 	@Value("${github.token}")
 	String token;
 	
-	public void invite(String username) {
+	public Map<String, Object> invite(String username) {
 		Client c = ClientBuilder.newClient();
 		WebTarget wt = c.target("https://api.github.com/orgs/risk-first/memberships/"+username);
 		wt = wt.queryParam("access_token", token);
@@ -28,7 +30,7 @@ public class GithubAPI {
 		Response r = b.put(in);
 		
 		if (r.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
-			return;
+			return r.readEntity(Map.class);
 		} else {
 			throw new RuntimeException("Problem calling api:"+ r.getStatusInfo());
 		}

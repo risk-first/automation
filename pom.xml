@@ -13,7 +13,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>riskfirst-automation</name>
-	<description>Provides Github and automation for </description>
+	<description>Provides Github and automation for Risk-First</description>
 
 	<properties>
 		<java.version>1.8</java.version>
