@@ -33,7 +33,24 @@ public class GithubAPI {
 			return r.readEntity(Map.class);
 		} else {
 			throw new RuntimeException("Problem calling api:"+ r.getStatusInfo());
-		}
+		}	
+	}
+	
+	/**
+	 * This specifically invites to the risk-first team
+	 */
+	public Map<String, Object> teamInvite(String username) {
+		Client c = ClientBuilder.newClient();
+		WebTarget wt = c.target("https://api.github.com/teams/2784576/memberships/"+username);
+		wt = wt.queryParam("access_token", token);
+		Builder b = wt.request();
+		Entity<String> in = Entity.text("");
+		Response r = b.put(in);
 		
+		if (r.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
+			return r.readEntity(Map.class);
+		} else {
+			throw new RuntimeException("Problem calling api:"+ r.getStatusInfo());
+		}	
 	}
 }

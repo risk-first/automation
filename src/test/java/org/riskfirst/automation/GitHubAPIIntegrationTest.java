@@ -38,6 +38,14 @@ public class GitHubAPIIntegrationTest {
 	}
 	
 	@Test
+	public void testAddTeamMember() {
+	
+		Map<String,Object> out = api.teamInvite("bretweinraub");
+		Assert.assertNotNull(out.get("url"));
+		System.out.println(out);
+	}
+	
+	@Test
 	public void testWebhookWatchAction() throws Exception {
 		String content = StreamUtils.copyToString(GitHubAPIIntegrationTest.class.getResourceAsStream("/started.example"), Charset.defaultCharset());
 		this.mockMvc.perform(post("/webhook")

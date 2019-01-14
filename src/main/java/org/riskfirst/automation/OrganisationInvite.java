@@ -22,9 +22,15 @@ public class OrganisationInvite {
 	private GithubAPI api;
 
 	@GetMapping(path = "/invite")
-	public void doOrganisationInvite(@RequestParam(name = "username", required = true) String username) {
+	public void doInvite(@RequestParam(name = "username", required = true) String username) {
 		Map<String, Object> out = api.invite(username);
 		LOG.info("/invite got " + out.toString());
+	}
+	
+	@GetMapping(path = "/teamInvite")
+	public void doTeamInvite(@RequestParam(name = "username", required = true) String username) {
+		Map<String, Object> out = api.teamInvite(username);
+		LOG.info("/teamInvite got " + out.toString());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -36,7 +42,7 @@ public class OrganisationInvite {
 			Map<String, Object> user = (Map<String, Object>) eventDetails.get("sender");
 			String login = (String) user.get("login");
 			LOG.info("Webhook Watch Event From " + login);
-			Map<String, Object> out = api.invite(login);
+			Map<String, Object> out = api.teamInvite(login);
 			LOG.info("/invite got " + out.toString());
 
 		} else if (eventDetails.containsKey("forkee")) {
@@ -44,7 +50,7 @@ public class OrganisationInvite {
 			Map<String, Object> owner = (Map<String, Object>) forkee.get("owner");
 			String login = (String) owner.get("login");
 			LOG.info("Webhook Fork Event From " + login);
-			Map<String, Object> out = api.invite(login);
+			Map<String, Object> out = api.teamInvite(login);
 			LOG.info("/invite got " + out.toString());
 		}
 	}
