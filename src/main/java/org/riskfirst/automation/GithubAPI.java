@@ -24,8 +24,8 @@ public class GithubAPI {
 	public Map<String, Object> invite(String username) {
 		Client c = ClientBuilder.newClient();
 		WebTarget wt = c.target("https://api.github.com/orgs/risk-first/memberships/"+username);
-		wt = wt.queryParam("access_token", token);
 		Builder b = wt.request();
+		b.header("authorization", "token "+token);
 		Entity<String> in = Entity.text("");
 		Response r = b.put(in);
 		
@@ -42,8 +42,8 @@ public class GithubAPI {
 	public Map<String, Object> teamInvite(String username) {
 		Client c = ClientBuilder.newClient();
 		WebTarget wt = c.target("https://api.github.com/teams/2784576/memberships/"+username);
-		wt = wt.queryParam("access_token", token);
 		Builder b = wt.request();
+		b.header("authorization", "token "+token);
 		Entity<String> in = Entity.text("");
 		Response r = b.put(in);
 		
